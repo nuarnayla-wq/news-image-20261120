@@ -5,6 +5,7 @@ Deterministic, no network: copies the bundled entry.png to
 """
 import os
 import shutil
+import sys
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 SRC = os.path.join(HERE, "entry.png")
@@ -13,6 +14,9 @@ DST = os.path.join(DST_DIR, "entry.png")
 
 
 def main():
+    if not os.path.isfile(SRC):
+        print(f"error: bundled image not found: {SRC}", file=sys.stderr)
+        raise SystemExit(1)
     os.makedirs(DST_DIR, exist_ok=True)
     shutil.copyfile(SRC, DST)
 
